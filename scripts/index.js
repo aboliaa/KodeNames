@@ -47,7 +47,7 @@ function fire() {
 function removeItem(array, index) {
 	if (index > -1) {
 		// console.log("index: " + index + ", word: " + array[index] + " removed.");
-		array.slice(index, 1);
+		array.splice(index, 1);
 	}
 }
 
