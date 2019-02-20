@@ -100,13 +100,18 @@ button, input, span#first {
 	margin-left: 5px;
 	margin-right: 5px;	
 }
-.ada {
+.ada1 {
   height: 1px;
   width: 1px;
   position: absolute;
   overflow: hidden;
   top: -10px;
  
+}
+
+.ada {
+
+
 }
 
 .redStarts{

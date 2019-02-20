@@ -5,7 +5,7 @@ Notes:
 */
 
 
-var wordsSelected = [];
+var imagesSelected = [];
 var teams = [];
 var NUMBER_OF_WORDS = 25;
 var spyMasterMode = false;
@@ -23,11 +23,6 @@ $("#seed").keyup(function() {
 	fire();
 });
 
-$("#gameMode").change(function() {
-	fire();
-});
-
-
 $("#seed").val(Math.floor(Math.random() * 1000));
 fire();
 
@@ -36,29 +31,9 @@ function fire() {
 	var seed = document.getElementById("seed").value;
 	Math.seedrandom(seed.toLowerCase());
 
-	var option = $('#gameMode :selected').val();
-	switch (option) {
-		case 'spanish':
-			sessionData = spanishData.slice(0);
-			break;
-		case '2knouns':
-			sessionData = data.slice(0);
-			break;
-		case 'movies':
-			sessionData = movieData.slice(0);
-			break;
-		case 'custom':
-			if (customData.length === 0) {
-				var customWordList = prompt("Please enter custom word list. The list will be saved until your refresh your browser. (The words MUST be delimanted by spaces). eg: cat dog mouse", "Enter words here");
-				customData = customWordList.split(' ');
-			}
-			sessionData = customData.slice(0);
-			break;
-		default:
-			sessionData = defaultData.slice(0);
-	}
+    sessionData = data.slice(0)
 
-	wordsSelected = [];
+	imagesSelected = [];
 	teams = [];
 	spyMasterMode = false;
 	document.getElementById("board").innerHTML = "";
@@ -72,7 +47,7 @@ function fire() {
 function removeItem(array, index) {
 	if (index > -1) {
 		// console.log("index: " + index + ", word: " + array[index] + " removed.");
-		array.splice(index, 1);
+		array.slice(index, 1);
 	}
 }
 
@@ -85,8 +60,15 @@ function createNewGame() {
 		var randomNumber = Math.floor(Math.random() * sessionData.length);
 		var word = sessionData[randomNumber];
 		removeItem(sessionData, randomNumber);
-		wordsSelected.push(word);
-		trs[i % 5] += "<div class=\"word\" id=\'" + i + "\' onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
+		imagesSelected.push(word);
+
+		html = '<div class="word" id="' + i + '" onclick="clicked(' + i + ')"><div>';
+		//html += '<a href="#"><span class="ada"></span>' + word + '</a>';
+		html += '<img src="/data/images/' + word + '" width="178" height="112">';
+		html += '</div></div>';
+        trs[i % 5] += html;
+
+		//trs[i % 5] += "<div class=\"word\" id=\'" + i + "\' onclick=\"clicked(\'" + i + "\')\"><div><a href=\"#\"><span class=\"ada\"></span>" + word + "</a></div></div>";
 	}
 	//<a href="#"><span class="ada">Washington stimulates economic growth </span>Read me</a>
 	for (var i = 0; i < trs.length; i++) {
@@ -133,7 +115,7 @@ function clicked(value) {
 		document.getElementById(value).style.backgroundColor = COLOR_GREEN;
 	} else {
 		//guessers mode
-		var word = wordsSelected[value];
+		var word = imagesSelected[value];
 		if (document.getElementById("confirm").checked) {
 			if (window.confirm("Are sure you want to select '" + word + "'?")) {
 				document.getElementById(value).style.backgroundColor = teams[value];
