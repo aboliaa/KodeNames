@@ -64,7 +64,7 @@ function createNewGame() {
 
 		html = '<div class="word" id="' + i + '" onclick="clicked(' + i + ')"><div>';
 		//html += '<a href="#"><span class="ada"></span>' + word + '</a>';
-		html += '<img src="/data/images/' + word + '" width="178" height="112">';
+		html += '<img src="data/images/' + word + '" width="178" height="112">';
 		html += '</div></div>';
         trs[i % 5] += html;
 
